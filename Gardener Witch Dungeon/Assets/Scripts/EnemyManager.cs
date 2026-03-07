@@ -4,6 +4,7 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
     public List<EnemyHealth> enemies;
+    public PlayerHealth playerHealth;
     private void Awake()
     {
         Instance = this;

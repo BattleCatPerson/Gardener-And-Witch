@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   energyCost: 20
   cooldown: 2
-  sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  sprite: {fileID: 311208693928687872, guid: 6f0e0fcea2b57284e98e3cae6dc10666, type: 3}
   damage: 1

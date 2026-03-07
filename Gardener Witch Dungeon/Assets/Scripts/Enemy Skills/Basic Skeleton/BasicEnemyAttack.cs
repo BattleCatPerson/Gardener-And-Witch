@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BasicEnemyAttack : EnemySkill
 {
-    [SerializeField] float damage;
+    [SerializeField] int damage;
     public override void Use()
     {
-        
+        EnemyManager.Instance.playerHealth.TakeDamage(damage);
     }
 }

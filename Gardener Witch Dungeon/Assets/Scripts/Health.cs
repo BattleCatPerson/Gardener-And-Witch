@@ -1,12 +1,45 @@
+using System.Collections;
 using UnityEngine;
-
-public class Health : MonoBehaviour
+using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
+public abstract class Health : MonoBehaviour
 {
-    [SerializeField] int health;
-    [SerializeField] bool dead;
-    public void TakeDamage (int damage)
+    public int health;
+    public int maxHealth;
+    public bool dead;
+    public Image healthbar;
+    public bool barAdjusting;
+    public float healthbarAdjustTime;
+    Coroutine adjustCoroutine;
+    private void Start()
+    {
+        maxHealth = health;
+        adjustCoroutine = null;
+    }
+
+    public void TakeDamage(int damage)
     {
         health -= damage;
+        health = Mathf.Max(health, 0);
         dead = health <= 0;
+        if (adjustCoroutine != null) StopCoroutine(adjustCoroutine);
+        adjustCoroutine = StartCoroutine(AdjustBar(healthbar.fillAmount));
+    }
+    public void Update()
+    {
+        barAdjusting = adjustCoroutine != null;
+        if (!barAdjusting) healthbar.fillAmount = (float) health / maxHealth;
+    }
+    public IEnumerator AdjustBar(float initialFill)
+    {
+        float timer = 0;
+        barAdjusting = true;
+        while (timer < healthbarAdjustTime)
+        {
+            timer += Time.deltaTime;
+            healthbar.fillAmount = Mathf.Lerp(initialFill, (float) health / maxHealth, timer / healthbarAdjustTime);
+            yield return null;
+        }
+        adjustCoroutine = null;
     }
 }
