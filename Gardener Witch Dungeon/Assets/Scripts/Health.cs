@@ -4,8 +4,8 @@ using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 public abstract class Health : MonoBehaviour
 {
-    public int health;
-    public int maxHealth;
+    public float health;
+    public float maxHealth;
     public bool dead;
     public Image healthbar;
     public bool barAdjusting;
@@ -17,7 +17,7 @@ public abstract class Health : MonoBehaviour
         adjustCoroutine = null;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         health = Mathf.Max(health, 0);

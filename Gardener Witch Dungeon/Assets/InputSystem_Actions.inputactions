@@ -113,6 +113,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Minigame Input",
+                    "type": "Button",
+                    "id": "e6bd73ce-d891-4c7d-b5d1-a60d6963c7a7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -555,6 +564,28 @@
                     "action": "Shift Target",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d165abd4-db02-4531-9834-627afa3107a0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Minigame Input",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a38dfb5a-f0c2-44ab-be72-33f985b15388",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Minigame Input",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

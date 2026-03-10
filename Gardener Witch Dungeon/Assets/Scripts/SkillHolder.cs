@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SkillHolder : MonoBehaviour
@@ -10,6 +11,7 @@ public class SkillHolder : MonoBehaviour
     public static SkillHolder Instance;
     public List<EnemyHealth> enemies;
     public EnemyHealth targetedEnemy;
+    public event Action<float> minigameReturnEvent;
     [SerializeField] List<Image> skillIcons;
     [SerializeField] List<PlantSkill> equippedSkills;
     [SerializeField] List<float> timers;
@@ -104,5 +106,14 @@ public class SkillHolder : MonoBehaviour
         targetIndex += adjustment;
         targetIndex %= enemies.Count;
         if (targetIndex < 0) targetIndex += enemies.Count;
+    }
+    public void StartMinigame(PlantSkill skill)
+    {
+        SceneManager.LoadScene(skill.sceneName, LoadSceneMode.Additive);
+    }
+    public void EndMinigame(float success)
+    {
+        minigameReturnEvent?.Invoke(success);
+        minigameReturnEvent = null;
     }
 }

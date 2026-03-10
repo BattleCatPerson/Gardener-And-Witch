@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlantAttack : PlantSkill
 {
-    [SerializeField] int damage;
-    public override void Use()
+    [SerializeField] float damage;
+    public override void Use(float success)
     {
         Debug.Log("ouch!");
-        SkillHolder.Instance.targetedEnemy.TakeDamage(damage);
+        SkillHolder.Instance.targetedEnemy.TakeDamage(damage * success);
     }
 }
