@@ -122,6 +122,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Use Skill",
+                    "type": "Button",
+                    "id": "3f6f6798-459d-4932-8e1c-5434c635ab76",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel Skill",
+                    "type": "Button",
+                    "id": "0d9027ee-2dde-4c79-b3ad-2677988c6c65",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -584,6 +602,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Minigame Input",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "893da3d4-b814-4d47-89ce-da55b9e40c55",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1211806-b880-4d54-99d6-3ada6afa5c86",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

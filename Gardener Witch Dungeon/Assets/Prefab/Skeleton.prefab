@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1028149762735999280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6543093039373834212}
+  m_Layer: 0
+  m_Name: Target Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6543093039373834212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028149762735999280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7066089012688014769}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4489459674682560238
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.75}
+  m_AnchoredPosition: {x: 0, y: 1.25}
   m_SizeDelta: {x: 0.75, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5506363871355874466
@@ -286,6 +317,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2734548332577630046}
+  - {fileID: 6543093039373834212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &487994719275618196
@@ -359,12 +391,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79950c96df6c2824b8b4a1dce069c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  health: 10
+  health: 1
   maxHealth: 0
   dead: 0
   healthbar: {fileID: 2078620979000338261}
   barAdjusting: 0
   healthbarAdjustTime: 0.1
+  targetPosition: {fileID: 6543093039373834212}
 --- !u!114 &3122454545998534924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,4 +413,5 @@ MonoBehaviour:
   skillList:
   - {fileID: 185429399065349707, guid: aa2e875b69cab9e4a8f9ead9aa36570b, type: 3}
   timeBetweenSkills: 2
+  timer: 0
   variance: 0.5

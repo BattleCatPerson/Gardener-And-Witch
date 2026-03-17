@@ -10,6 +10,7 @@ public abstract class Health : MonoBehaviour
     public Image healthbar;
     public bool barAdjusting;
     public float healthbarAdjustTime;
+    public Transform targetPosition;
     Coroutine adjustCoroutine;
     private void Start()
     {

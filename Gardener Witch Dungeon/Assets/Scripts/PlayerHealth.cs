@@ -3,8 +3,13 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Health
 {
-    //private void Update()
-    //{
-    //    base.Update();
-    //}
+    private void Update()
+    {
+        base.Update();
+        if (!VictoryDefeatManager.Instance.conditionChosen && health <= 0)
+        {
+            VictoryDefeatManager.Instance.Lose();
+        }
+    }
+
 }
