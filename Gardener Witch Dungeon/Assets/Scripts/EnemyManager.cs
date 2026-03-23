@@ -10,6 +10,11 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+    }
+    public void SetEnemies(EncounterData data)
+    {
+        encounterData = data;
         List<EnemyHealth> enemyPrefabs = encounterData.enemies;
         List<float> enemyPositions = encounterData.positions;
         for (int i = 0; i < enemyPrefabs.Count; i++)
@@ -35,7 +40,7 @@ public class EnemyManager : MonoBehaviour
         if (enemies.Count == 0)
         {
             Debug.Log("You win");
-            VictoryDefeatManager.Instance.Win();
+            VictoryDefeatManager.Instance.SelectCondition(true);
         }
     }
 }

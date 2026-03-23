@@ -8,25 +8,36 @@ public class VictoryDefeatManager : MonoBehaviour
     [SerializeField] bool won;
     [SerializeField] Animator nextButton;
     [SerializeField] Animator playerCanvas;
+    [SerializeField] Animator defeatAnimator;
     [SerializeField] float delayToNext;
+    [SerializeField] float delayToGameOver;
     private void Awake()
     {
         Instance = this;
     }
-    public void Win()
+    public void SelectCondition(bool win)
     {
+        won = win;
         conditionChosen = true;
-        won = true;
-        StartCoroutine(ShowNextButton());
-    }
-    public void Lose()
-    {
-        conditionChosen = true;
-        won = false;
+        if (win)
+        {
+            StartCoroutine(ShowNextButton());
+        }
+        else
+        {
+            StartCoroutine(GameOver());
+        }
     }
     public IEnumerator ShowNextButton()
     {
         yield return new WaitForSeconds(delayToNext);
         nextButton.SetTrigger("Win");
+        playerCanvas.SetTrigger("Fade");
+    }
+    public IEnumerator GameOver()
+    {
+        playerCanvas.SetTrigger("Fade");
+        yield return new WaitForSeconds(delayToGameOver);
+        defeatAnimator.SetTrigger("Lose");
     }
 }

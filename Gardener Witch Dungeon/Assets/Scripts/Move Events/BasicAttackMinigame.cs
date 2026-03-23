@@ -39,7 +39,7 @@ public class BasicAttackMinigame : MonoBehaviour
         while (timer < totalTime)
         {
             timer += Time.unscaledDeltaTime;
-            float size = Mathf.Lerp(maxScale, targetScale, timer / totalTime);
+            float size = Mathf.Lerp(maxScale, 0, timer / totalTime);
             image.sizeDelta = new(size, size);
             yield return null;
         }

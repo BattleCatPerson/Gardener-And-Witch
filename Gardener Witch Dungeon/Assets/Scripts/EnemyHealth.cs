@@ -17,6 +17,7 @@ public class EnemyHealth : Health
         {
             EnemyManager.Instance.RemoveEnemy(this);
             ResourceTracker.bones += boneDrops;
+            FloorTracker.runCollectedBones += boneDrops;
             Destroy(gameObject);
         }
     }

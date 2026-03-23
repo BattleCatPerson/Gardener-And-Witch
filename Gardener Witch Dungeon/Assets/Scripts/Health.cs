@@ -12,9 +12,9 @@ public abstract class Health : MonoBehaviour
     public float healthbarAdjustTime;
     public Transform targetPosition;
     Coroutine adjustCoroutine;
-    private void Start()
+    public void Start()
     {
-        maxHealth = health;
+        //maxHealth = health;
         adjustCoroutine = null;
     }
 

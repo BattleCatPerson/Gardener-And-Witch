@@ -14,6 +14,7 @@ public class SkillHolder : MonoBehaviour
     public List<EnemyHealth> enemies;
     public EnemyHealth targetedEnemy;
     public event Action<float> minigameReturnEvent;
+    public static float savedEnergy = -1;
     [Header("UI")]
     //[SerializeField] List<Image> skillIcons;
     [SerializeField] List<PlantSkill> equippedSkills;
@@ -88,7 +89,15 @@ public class SkillHolder : MonoBehaviour
         turnTimer = maxTurnTime;
         StartTurn();
 
-        energy = maxEnergy;
+        if (savedEnergy < 0)
+        {
+            energy = maxEnergy;
+        }
+        else
+        {
+            energy = savedEnergy;
+        }
+        energyBar.fillAmount = energy / maxEnergy;
     }
 
     void Update()
@@ -96,6 +105,7 @@ public class SkillHolder : MonoBehaviour
         //energy += energyRechargeRate * Time.deltaTime;
         //energy = Mathf.Min(energy, maxEnergy);
         barAdjusting = adjustCoroutine != null;
+        savedEnergy = energy;
         //if (!barAdjusting) energyBar.fillAmount = energy / maxEnergy;
         if (turnActive)
         {
@@ -130,7 +140,7 @@ public class SkillHolder : MonoBehaviour
         }
         else
         {
-            int multiplier = TurnManager.Instance.timePaused ? 0 : 1;
+            int multiplier = TurnManager.Instance.timePaused || VictoryDefeatManager.Instance.conditionChosen? 0 : 1;
             turnTimer += Time.deltaTime * multiplier;
             if (turnTimer >= maxTurnTime)
             {
@@ -178,10 +188,18 @@ public class SkillHolder : MonoBehaviour
     }
     public void ShiftTarget(InputAction.CallbackContext context)
     {
+        if (enemies.Count <= 1) return;
         float value = context.ReadValue<float>();
         int adjustment = value < 1 ? -1 : 1;
         targetIndex += adjustment;
-        targetIndex %= enemies.Count;
+        if (targetIndex >= enemies.Count)
+        {
+            targetIndex = 0;
+        }
+        else if (targetIndex < 0)
+        {
+            targetIndex = enemies.Count - 1;
+        }
         if (targetIndex < 0) targetIndex += enemies.Count;
     }
     public void StartTargeting(PlantSkill skill)

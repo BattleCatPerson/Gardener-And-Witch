@@ -392,12 +392,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   health: 1
-  maxHealth: 0
+  maxHealth: 2
   dead: 0
   healthbar: {fileID: 2078620979000338261}
   barAdjusting: 0
   healthbarAdjustTime: 0.1
   targetPosition: {fileID: 6543093039373834212}
+  boneDrops: 5
 --- !u!114 &3122454545998534924
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class EnemySkillManager : MonoBehaviour
 
     void Update()
     {
-        float multiplier = TurnManager.Instance.timePaused ? 0 : 1;
+        float multiplier = TurnManager.Instance.timePaused || VictoryDefeatManager.Instance.conditionChosen ? 0 : 1;
         timer += Time.deltaTime * multiplier;
         if (timer >=  timeBetweenSkills)
         {
