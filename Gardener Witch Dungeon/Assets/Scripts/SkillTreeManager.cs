@@ -16,13 +16,14 @@ public class SkillTreeManager : MonoBehaviour
     [SerializeField] List<SkillTreeUnlocked> unlockStatuses;
     [SerializeField] TextMeshProUGUI boneText;
     [SerializeField] SkillTreePanel panel;
+    [SerializeField] Animator skillTreeAnimator;
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
-        ResourceTracker.bones = 100;
+        //ResourceTracker.bones = 100;
     }
     private void Update()
     {
@@ -38,7 +39,7 @@ public class SkillTreeManager : MonoBehaviour
     }
     public bool CanUnlock(SkillTreeElement skill)
     {
-        if (SkillUnlocked(skill) || ResourceTracker.bones < skill.boneCost) return false;
+        if (/*SkillUnlocked(skill) || */ResourceTracker.bones < skill.boneCost) return false;
         foreach (SkillTreeElement s in skill.requirements)
         {
             if (!SkillUnlocked(s)) return false;
@@ -59,7 +60,11 @@ public class SkillTreeManager : MonoBehaviour
     }
     public void OpenPanel(SkillTreeElement skill)
     {
-        panel.SetStuff(skill.skillName, skill.skillDescription, skill.boneCost);
+        panel.SetStuff(skill, skill.skillName, skill.skillDescription, skill.boneCost, SkillUnlocked(skill));
         panel.OpenPanel();
+    }
+    public void CloseTree()
+    {
+
     }
 }
