@@ -14,7 +14,7 @@ public class StatManager : MonoBehaviour
     [SerializeField] List<UpgradeButton> upgradeButtons;
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
         if (upgrades == null)
         {
             upgrades = new Dictionary<UpgradeType, int>();

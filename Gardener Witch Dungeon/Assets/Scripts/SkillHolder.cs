@@ -10,6 +10,13 @@ using UnityEngine.UI;
 
 public class SkillHolder : MonoBehaviour
 {
+    [Serializable]
+    public class UpgradeTypeToSkillList
+    {
+        public UpgradeType upgradeType;
+        public List<PlantSkill> skills;
+    }
+
     public static SkillHolder Instance;
     public List<EnemyHealth> enemies;
     public EnemyHealth targetedEnemy;
@@ -17,7 +24,9 @@ public class SkillHolder : MonoBehaviour
     public static float savedEnergy = -1;
     [Header("UI")]
     //[SerializeField] List<Image> skillIcons;
-    [SerializeField] List<PlantSkill> equippedSkills;
+
+    [SerializeField] List<UpgradeTypeToSkillList> skillLists;
+    [SerializeField] List<PlantSkill> startingSkills;
     [SerializeField] SkillSelectionButton skillButtonPrefab;
     [SerializeField] RectTransform skillPanel;
     [SerializeField] GridLayoutGroup layoutGroup;
@@ -58,18 +67,7 @@ public class SkillHolder : MonoBehaviour
     }
     void Start()
     {
-        for (int i = 0; i < equippedSkills.Count; i++)
-        {
-            //skillIcons[i].sprite = equippedSkills[i].sprite;
-            //timers[i] = equippedSkills[i].cooldown; // x is the current timer, y is the cooldown
-            //actions[i].action.performed += equippedSkills[i].AttemptUse;
-
-            // initializes stuff
-            SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
-            s.SetValues(equippedSkills[i]);
-        }
-        // sets size of skill panel based on how many skills you have
-        skillPanel.sizeDelta = new(skillPanel.sizeDelta.x, Mathf.Max(skillPanel.sizeDelta.y, equippedSkills.Count * layoutGroup.cellSize.y));
+        EquipSkills();
 
         // sets input action stuff
         shiftTarget.action.performed += ShiftTarget;
@@ -140,7 +138,7 @@ public class SkillHolder : MonoBehaviour
         }
         else
         {
-            int multiplier = TurnManager.Instance.timePaused || VictoryDefeatManager.Instance.conditionChosen? 0 : 1;
+            int multiplier = TurnManager.Instance.timePaused || VictoryDefeatManager.Instance.conditionChosen ? 0 : 1;
             turnTimer += Time.deltaTime * multiplier;
             if (turnTimer >= maxTurnTime)
             {
@@ -251,5 +249,23 @@ public class SkillHolder : MonoBehaviour
         TurnManager.Instance.timePaused = false;
         selectedSkillInTurn = false;
         turnTimer = 0;
+    }
+    public void EquipSkills()
+    {   foreach (PlantSkill skill in startingSkills)
+        {
+            SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
+            s.SetValues(skill);
+        }
+        foreach (var skillList in skillLists)
+        {
+            int upgradeCount = StatManager.upgrades[skillList.upgradeType];
+            for (int i = 0; i < upgradeCount; i++)
+            {
+                SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
+                s.SetValues(skillList.skills[i]);
+            }
+        }
+        // sets size of skill panel based on how many skills you have
+        skillPanel.sizeDelta = new(skillPanel.sizeDelta.x, Mathf.Max(skillPanel.sizeDelta.y, startingSkills.Count * layoutGroup.cellSize.y));
     }
 }
