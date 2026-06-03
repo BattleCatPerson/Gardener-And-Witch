@@ -11,6 +11,8 @@ public abstract class Health : MonoBehaviour
     public bool barAdjusting;
     public float healthbarAdjustTime;
     public Transform targetPosition;
+    public Animator flashAnimator;
+    public string flashTrigger;
     Coroutine adjustCoroutine;
     public void Start()
     {
@@ -25,11 +27,12 @@ public abstract class Health : MonoBehaviour
         dead = health <= 0;
         if (adjustCoroutine != null) StopCoroutine(adjustCoroutine);
         adjustCoroutine = StartCoroutine(AdjustBar(healthbar.fillAmount));
+        flashAnimator.SetTrigger(flashTrigger);
     }
     public void Update()
     {
         barAdjusting = adjustCoroutine != null;
-        if (!barAdjusting) healthbar.fillAmount = (float) health / maxHealth;
+        if (!barAdjusting) healthbar.fillAmount = (float)health / maxHealth;
     }
     public IEnumerator AdjustBar(float initialFill)
     {
@@ -38,7 +41,7 @@ public abstract class Health : MonoBehaviour
         while (timer < healthbarAdjustTime)
         {
             timer += Time.deltaTime;
-            healthbar.fillAmount = Mathf.Lerp(initialFill, (float) health / maxHealth, timer / healthbarAdjustTime);
+            healthbar.fillAmount = Mathf.Lerp(initialFill, (float)health / maxHealth, timer / healthbarAdjustTime);
             yield return null;
         }
         adjustCoroutine = null;

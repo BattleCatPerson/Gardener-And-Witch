@@ -1282,6 +1282,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669253787}
   m_CullTransparentMesh: 1
+--- !u!1 &702946365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 702946367}
+  - component: {fileID: 702946366}
+  m_Layer: 0
+  m_Name: Stat Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &702946366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702946365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8290712243420c8468e4c1fb29ea7342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatManager
+  upgradeTypes: 0000000001000000020000000300000004000000
+  upgradeButtons: []
+--- !u!4 &702946367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702946365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.32013, y: 3.22852, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &729100276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0008860039}
+  m_AnchoredPosition: {x: 0, y: 0.00026692258}
   m_SizeDelta: {x: 400, y: 110}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1030108534
@@ -4036,7 +4082,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2033817940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999779
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4079,6 +4125,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857679400}
   m_CullTransparentMesh: 1
+--- !u!212 &1982757483 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7112450135173635045, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+  m_PrefabInstance: {fileID: 3582785499488840671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2033817939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4540,6 +4591,18 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1388720875790636583, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: flashDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388720875790636583, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: flashMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 3dbe9ac4cc95c0243bd57c14aac88687, type: 2}
+    - target: {fileID: 1388720875790636583, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 1982757483}
+    - target: {fileID: 1388720875790636583, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
       propertyPath: healthbarAdjustTime
       value: 0.2
       objectReference: {fileID: 0}
@@ -4751,3 +4814,4 @@ SceneRoots:
   - {fileID: 1834003388}
   - {fileID: 854822296}
   - {fileID: 196936490}
+  - {fileID: 702946367}

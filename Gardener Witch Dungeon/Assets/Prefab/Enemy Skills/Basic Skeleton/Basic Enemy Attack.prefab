@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   skillCooldown: 2
+  skillName: Basic Attack
   damage: 1
+  timer: 0

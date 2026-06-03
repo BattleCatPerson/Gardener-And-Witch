@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 487994719275618196}
   - component: {fileID: 790148827127421446}
   - component: {fileID: 3122454545998534924}
+  - component: {fileID: 5786353225024194513}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -346,7 +347,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -369,7 +370,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4354231566380549168, guid: 1e665e582a0c383419af1593c64e380d, type: 3}
+  m_Sprite: {fileID: 267241964489013383, guid: 31e8e32400fca974b8426492ba475592, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -398,6 +399,9 @@ MonoBehaviour:
   barAdjusting: 0
   healthbarAdjustTime: 0.1
   targetPosition: {fileID: 6543093039373834212}
+  flashDuration: 0.25
+  spriteRenderer: {fileID: 487994719275618196}
+  flashMaterial: {fileID: 2100000, guid: 3dbe9ac4cc95c0243bd57c14aac88687, type: 2}
   boneDrops: 5
 --- !u!114 &3122454545998534924
 MonoBehaviour:
@@ -416,3 +420,28 @@ MonoBehaviour:
   timeBetweenSkills: 2
   timer: 0
   variance: 0.5
+  animator: {fileID: 5786353225024194513}
+  selectedSkill: {fileID: 0}
+  attacking: 0
+--- !u!95 &5786353225024194513
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576149582087831198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c6f68b84bbe0274fae6c55a52b95982, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -8,6 +8,9 @@ public class EnemySkillManager : MonoBehaviour
     [SerializeField] float timeBetweenSkills;
     [SerializeField] float timer;
     [SerializeField] float variance;
+    [SerializeField] Animator animator;
+    [SerializeField] EnemySkill selectedSkill;
+    [SerializeField] bool attacking;
     void Start()
     {
         //StartCoroutine(SelectSkill());
@@ -16,12 +19,20 @@ public class EnemySkillManager : MonoBehaviour
     void Update()
     {
         float multiplier = TurnManager.Instance.timePaused || VictoryDefeatManager.Instance.conditionChosen ? 0 : 1;
-        timer += Time.deltaTime * multiplier;
-        if (timer >=  timeBetweenSkills)
+        if (!TurnManager.Instance.timePaused)
         {
-            SelectRandomSkill();
-            timer = 0;
+            timer += Time.deltaTime * multiplier;
+            if (timer >= timeBetweenSkills)
+            {
+                //SelectRandomSkill();
+                selectedSkill = skillList[Random.Range(0, skillList.Count)];
+                animator.SetTrigger(selectedSkill.skillName);
+                TurnManager.Instance.timePaused = true;
+                // start animations and stuff
+                timer = 0;
+            }
         }
+
     }
     //public IEnumerator SelectSkill()
     //{
@@ -34,13 +45,14 @@ public class EnemySkillManager : MonoBehaviour
     //        yield return null;
     //    }
     //}
-    public void SelectRandomSkill()
+    // call these in animations
+    public void UseSkill()
     {
         //TurnManager.Instance.timePaused = true;
-        EnemySkill skill = skillList[Random.Range(0, skillList.Count)];
-        skill.Use();
-        timeBetweenSkills = skill.skillCooldown;
+        selectedSkill.Use();
+        timeBetweenSkills = selectedSkill.skillCooldown;
         timeBetweenSkills += Random.Range(-variance, variance);
         //StartCoroutine(SelectSkill());
     }
+    public void EndSkill() => TurnManager.Instance.timePaused = false;
 }
