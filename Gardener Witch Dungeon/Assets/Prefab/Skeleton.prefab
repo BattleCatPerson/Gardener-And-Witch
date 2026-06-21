@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7066089012688014769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3880556456169110662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8661976582601940926}
+  m_Layer: 0
+  m_Name: Player Attack Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8661976582601940926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880556456169110662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7066089012688014769}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4489459674682560238
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +350,7 @@ Transform:
   m_Children:
   - {fileID: 2734548332577630046}
   - {fileID: 6543093039373834212}
+  - {fileID: 8661976582601940926}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &487994719275618196
@@ -399,9 +431,10 @@ MonoBehaviour:
   barAdjusting: 0
   healthbarAdjustTime: 0.1
   targetPosition: {fileID: 6543093039373834212}
-  flashDuration: 0.25
-  spriteRenderer: {fileID: 487994719275618196}
-  flashMaterial: {fileID: 2100000, guid: 3dbe9ac4cc95c0243bd57c14aac88687, type: 2}
+  flashAnimator: {fileID: 5786353225024194513}
+  flashTrigger: Hurt
+  damageMultiplier: 1
+  playerPosition: {fileID: 0}
   boneDrops: 5
 --- !u!114 &3122454545998534924
 MonoBehaviour:

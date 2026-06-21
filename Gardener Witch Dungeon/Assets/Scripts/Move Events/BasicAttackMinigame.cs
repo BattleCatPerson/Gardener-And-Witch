@@ -61,7 +61,7 @@ public class BasicAttackMinigame : MonoBehaviour
     {
         yield return new WaitForSeconds(returnTime);
         input.action.performed -= Input;
-        SkillHolder.Instance.EndMinigame(success);
+        //SkillHolder.Instance.EndMinigame(success);
         SceneManager.UnloadSceneAsync(sceneName);
     }
 }

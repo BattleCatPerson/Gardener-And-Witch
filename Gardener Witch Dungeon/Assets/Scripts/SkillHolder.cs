@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,11 +19,10 @@ public class SkillHolder : MonoBehaviour
     public static SkillHolder Instance;
     public List<EnemyHealth> enemies;
     public EnemyHealth targetedEnemy;
-    public event Action<float> minigameReturnEvent;
+    public event Action<SkillResult> skillEvent;
     public static float savedEnergy = -1;
     [Header("UI")]
     //[SerializeField] List<Image> skillIcons;
-
     [SerializeField] List<UpgradeTypeToSkillList> skillLists;
     [SerializeField] List<PlantSkill> startingSkills;
     [SerializeField] SkillSelectionButton skillButtonPrefab;
@@ -53,6 +51,13 @@ public class SkillHolder : MonoBehaviour
     [SerializeField] InputActionReference useSkill;
     [SerializeField] InputActionReference cancelSkill;
     [SerializeField] Animator skillPanelAnimator;
+    [Header("Skill Use")]
+    [SerializeField] Animator plantSkillAnimator;
+    [SerializeField, Range(0f, 1f)] float success; // change this in the animation 
+    [SerializeField] SkillResult skillResult;
+    [SerializeField] InputActionReference input;
+    [SerializeField] bool skillInUse;
+    [SerializeField] bool canInput; // set this in animation
     [Header("Turn Tracker")]
     [SerializeField] Image turnBar;
     [SerializeField] float turnTimer;
@@ -73,7 +78,7 @@ public class SkillHolder : MonoBehaviour
         shiftTarget.action.performed += ShiftTarget;
         useSkill.action.performed += StartMinigame;
         cancelSkill.action.performed += CancelSkill;
-
+        input.action.performed += UseSkill;
         adjustCoroutine = null;
 
         // sets targeting indicators
@@ -107,6 +112,7 @@ public class SkillHolder : MonoBehaviour
         //if (!barAdjusting) energyBar.fillAmount = energy / maxEnergy;
         if (turnActive)
         {
+            targetIndex = Mathf.Clamp(targetIndex, 0, enemies.Count - 1);
             if (enemies.Count > 0)
             {
                 targetedEnemy = enemies[targetIndex];
@@ -218,7 +224,9 @@ public class SkillHolder : MonoBehaviour
     {
         if (!targeting) return;
         selectedSkillInTurn = true;
-        SceneManager.LoadScene(selectedSkill.sceneName, LoadSceneMode.Additive);
+        plantSkillAnimator.SetTrigger(selectedSkill.triggerName);
+        UseEnergy(selectedSkill.energyCost);
+        //SceneManager.LoadScene(selectedSkill.sceneName, LoadSceneMode.Additive);
         targeting = false;
         MoveTargetIndicators();
     }
@@ -229,14 +237,14 @@ public class SkillHolder : MonoBehaviour
             t.position = targetMarkerParent.position;
         }
     }
-    public void EndMinigame(float success)
-    {
-        minigameReturnEvent?.Invoke(success);
-        minigameReturnEvent = null;
-        UseEnergy(selectedSkill.energyCost);
-        selectedSkill = null;
-        EndTurn();
-    }
+    //public void EndMinigame(float success)
+    //{
+    //    skillEvent?.Invoke(success);
+    //    skillEvent = null;
+    //    UseEnergy(selectedSkill.energyCost);
+    //    selectedSkill = null;
+    //    EndTurn();
+    //}
     public void StartTurn()
     {
         turnActive = true;
@@ -249,6 +257,22 @@ public class SkillHolder : MonoBehaviour
         TurnManager.Instance.timePaused = false;
         selectedSkillInTurn = false;
         turnTimer = 0;
+    }
+    public void UseSkill(InputAction.CallbackContext context)
+    {
+        if (canInput)
+        {
+            skillResult = selectedSkill.GetSkillResult(success);
+            plantSkillAnimator.SetTrigger(skillResult.ToString());
+        }
+        //if (skillInUse)
+        //{
+        //    skillEvent?.Invoke(success);
+        //}
+    }
+    public void InvokePlantSkillEvent() //use in animation
+    {
+        skillEvent?.Invoke(skillResult);
     }
     public void EquipSkills()
     {   foreach (PlantSkill skill in startingSkills)

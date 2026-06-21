@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum UpgradeType
 {
-    Health, Damage, Sunlight, Harvesting, Recovery, SkillSlots
+    Health, Damage, Sunlight, Block, Recovery, SkillSlots
 }
 
 public class StatManager : MonoBehaviour

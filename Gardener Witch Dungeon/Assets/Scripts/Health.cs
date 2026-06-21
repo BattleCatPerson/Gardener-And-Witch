@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 public abstract class Health : MonoBehaviour
 {
     public float health;
@@ -13,6 +12,7 @@ public abstract class Health : MonoBehaviour
     public Transform targetPosition;
     public Animator flashAnimator;
     public string flashTrigger;
+    public float damageMultiplier = 1f;
     Coroutine adjustCoroutine;
     public void Start()
     {
@@ -22,12 +22,16 @@ public abstract class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        float finalDamage = damage * damageMultiplier;
+        health -= finalDamage;
         health = Mathf.Max(health, 0);
         dead = health <= 0;
+        if (!dead && finalDamage > 0)
+        {
+            flashAnimator.SetTrigger(flashTrigger);
+        }
         if (adjustCoroutine != null) StopCoroutine(adjustCoroutine);
         adjustCoroutine = StartCoroutine(AdjustBar(healthbar.fillAmount));
-        flashAnimator.SetTrigger(flashTrigger);
     }
     public void Update()
     {

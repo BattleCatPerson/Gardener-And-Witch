@@ -4,9 +4,30 @@ using UnityEngine.InputSystem;
 public class PlantAttack : PlantSkill
 {
     [SerializeField] float damage;
-    public override void Use(float success)
+    [SerializeField] float goodDamageMult;
+    [SerializeField] float okDamageMult;
+    [SerializeField] float badDamageMult;
+    public override void Use(SkillResult success)
     {
         Debug.Log("ouch!");
-        SkillHolder.Instance.targetedEnemy.TakeDamage(damage * success);
+        float mult = 1.0f;
+        Debug.Log(success.ToString());
+        if (success == SkillResult.Good)
+        {
+            mult = goodDamageMult;
+        }
+        else if (success == SkillResult.Ok)
+        {
+            mult = okDamageMult;
+        }
+        else if (success == SkillResult.Bad)
+        {
+            mult = badDamageMult;
+        }
+        else if (success == SkillResult.Fail)
+        {
+            mult = 0;
+        }
+        SkillHolder.Instance.targetedEnemy.TakeDamage(damage * mult);
     }
 }

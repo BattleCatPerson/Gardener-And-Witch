@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySkillManager : MonoBehaviour
 {
+    public static bool enemyAttacking = false;
     [SerializeField] List<EnemySkill> skillList;
     [SerializeField] float timeBetweenSkills;
     [SerializeField] float timer;
@@ -26,6 +27,7 @@ public class EnemySkillManager : MonoBehaviour
             {
                 //SelectRandomSkill();
                 selectedSkill = skillList[Random.Range(0, skillList.Count)];
+                enemyAttacking = true;
                 animator.SetTrigger(selectedSkill.skillName);
                 TurnManager.Instance.timePaused = true;
                 // start animations and stuff
@@ -54,5 +56,9 @@ public class EnemySkillManager : MonoBehaviour
         timeBetweenSkills += Random.Range(-variance, variance);
         //StartCoroutine(SelectSkill());
     }
-    public void EndSkill() => TurnManager.Instance.timePaused = false;
+    public void EndSkill()
+    {
+        enemyAttacking = false;
+        TurnManager.Instance.timePaused = false;
+    }
 }
