@@ -10,11 +10,13 @@ public abstract class Health : MonoBehaviour
     public bool barAdjusting;
     public float healthbarAdjustTime;
     public Transform targetPosition;
-    public Animator flashAnimator;
+    public Animator animator;
     public string flashTrigger;
     public float damageMultiplier = 1f;
+    public bool inCombat; // use to blur
+    public SpriteRenderer sprite;
     Coroutine adjustCoroutine;
-    public void Start()
+    public void Initialize()
     {
         //maxHealth = health;
         adjustCoroutine = null;
@@ -28,12 +30,12 @@ public abstract class Health : MonoBehaviour
         dead = health <= 0;
         if (!dead && finalDamage > 0)
         {
-            flashAnimator.SetTrigger(flashTrigger);
+            animator.SetTrigger(flashTrigger);
         }
         if (adjustCoroutine != null) StopCoroutine(adjustCoroutine);
         adjustCoroutine = StartCoroutine(AdjustBar(healthbar.fillAmount));
     }
-    public void Update()
+    public void AdjustBar()
     {
         barAdjusting = adjustCoroutine != null;
         if (!barAdjusting) healthbar.fillAmount = (float)health / maxHealth;
@@ -49,5 +51,9 @@ public abstract class Health : MonoBehaviour
             yield return null;
         }
         adjustCoroutine = null;
+    }
+    public void Blur(bool enabled)
+    {
+        animator.SetBool("Blur", enabled);
     }
 }

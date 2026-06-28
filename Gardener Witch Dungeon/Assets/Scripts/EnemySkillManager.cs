@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySkillManager : MonoBehaviour
 {
     public static bool enemyAttacking = false;
+    [SerializeField] EnemyHealth health;
     [SerializeField] List<EnemySkill> skillList;
     [SerializeField] float timeBetweenSkills;
     [SerializeField] float timer;
@@ -12,9 +13,12 @@ public class EnemySkillManager : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] EnemySkill selectedSkill;
     [SerializeField] bool attacking;
+    [SerializeField] float moveToPositionTime;
+    [SerializeField] Vector3 initialPos;
     void Start()
     {
         //StartCoroutine(SelectSkill());
+        initialPos = transform.position;
     }
 
     void Update()
@@ -28,13 +32,21 @@ public class EnemySkillManager : MonoBehaviour
                 //SelectRandomSkill();
                 selectedSkill = skillList[Random.Range(0, skillList.Count)];
                 enemyAttacking = true;
-                animator.SetTrigger(selectedSkill.skillName);
+                StartSkill();
                 TurnManager.Instance.timePaused = true;
                 // start animations and stuff
                 timer = 0;
             }
         }
 
+    }
+    public void StartSkill()
+    {
+        StartCoroutine(MoveToPosition());
+        List<Health> activeUnits = new();
+        activeUnits.Add(EnemyManager.Instance.playerHealth);
+        activeUnits.Add(health);
+        EnemyManager.Instance.BlurUnits(activeUnits);
     }
     //public IEnumerator SelectSkill()
     //{
@@ -58,7 +70,33 @@ public class EnemySkillManager : MonoBehaviour
     }
     public void EndSkill()
     {
+        StartCoroutine(ReturnToInitialPosition());
+    }
+
+    public IEnumerator MoveToPosition()
+    {
+        float timer = 0;
+        Vector3 finalPos = EnemyManager.Instance.playerHealth.transform.position + Vector3.right * selectedSkill.distanceFromPlayer;
+        while (timer < moveToPositionTime)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(initialPos, finalPos, timer / moveToPositionTime);
+            yield return null;
+        }
+        animator.SetTrigger(selectedSkill.skillName);
+    }
+    public IEnumerator ReturnToInitialPosition()
+    {
+        float timer = 0;
+        Vector3 start = transform.position;
+        while (timer < moveToPositionTime)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(start, initialPos, timer / moveToPositionTime);
+            yield return null;
+        }
         enemyAttacking = false;
         TurnManager.Instance.timePaused = false;
+        EnemyManager.Instance.Unblur();
     }
 }

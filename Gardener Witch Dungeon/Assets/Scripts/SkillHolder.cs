@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class SkillHolder : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class SkillHolder : MonoBehaviour
     }
 
     public static SkillHolder Instance;
+    public PlayerHealth playerHealth;
     public List<EnemyHealth> enemies;
     public EnemyHealth targetedEnemy;
     public event Action<SkillResult> skillEvent;
@@ -58,6 +60,8 @@ public class SkillHolder : MonoBehaviour
     [SerializeField] InputActionReference input;
     [SerializeField] bool skillInUse;
     [SerializeField] bool canInput; // set this in animation
+    [SerializeField] float moveToPositionTime;
+    [SerializeField] Vector3 initialPos;
     [Header("Turn Tracker")]
     [SerializeField] Image turnBar;
     [SerializeField] float turnTimer;
@@ -101,6 +105,9 @@ public class SkillHolder : MonoBehaviour
             energy = savedEnergy;
         }
         energyBar.fillAmount = energy / maxEnergy;
+        initialPos = transform.position;
+
+        SceneManager.activeSceneChanged += UnbindInputs;
     }
 
     void Update()
@@ -192,7 +199,8 @@ public class SkillHolder : MonoBehaviour
     }
     public void ShiftTarget(InputAction.CallbackContext context)
     {
-        if (enemies.Count <= 1) return;
+        Debug.Log("shift target");
+        if (enemies.Count <= 1 || !targeting) return;
         float value = context.ReadValue<float>();
         int adjustment = value < 1 ? -1 : 1;
         targetIndex += adjustment;
@@ -223,12 +231,44 @@ public class SkillHolder : MonoBehaviour
     public void StartMinigame(InputAction.CallbackContext context)
     {
         if (!targeting) return;
+        targeting = false;
+        MoveTargetIndicators();
+        List<Health> activeUnits = new();
+        activeUnits.Add(targetedEnemy);
+        activeUnits.Add(playerHealth);
+        EnemyManager.Instance.BlurUnits(activeUnits);
+        StartCoroutine(MoveToPosition());
+    }
+    public void StartPlantAnimation()
+    {
         selectedSkillInTurn = true;
         plantSkillAnimator.SetTrigger(selectedSkill.triggerName);
         UseEnergy(selectedSkill.energyCost);
         //SceneManager.LoadScene(selectedSkill.sceneName, LoadSceneMode.Additive);
-        targeting = false;
-        MoveTargetIndicators();
+    }
+    public IEnumerator MoveToPosition()
+    {
+        float timer = 0;
+        Vector3 finalPos = targetedEnemy.transform.position - Vector3.right * selectedSkill.distanceFromTarget;
+        while (timer < moveToPositionTime)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(initialPos, finalPos, timer / moveToPositionTime);
+            yield return null;
+        }
+        StartPlantAnimation();
+    }
+    public IEnumerator ReturnToInitialPosition()
+    {
+        float timer = 0;
+        Vector3 start = transform.position;
+        while (timer < moveToPositionTime)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(start, initialPos, timer / moveToPositionTime);
+            yield return null;
+        }
+        ConfirmTurnEnd();   
     }
     public void MoveTargetIndicators()
     {
@@ -252,6 +292,11 @@ public class SkillHolder : MonoBehaviour
         skillPanelAnimator.SetTrigger("In");
     }
     public void EndTurn()
+    {
+        EnemyManager.Instance.Unblur();
+        StartCoroutine(ReturnToInitialPosition());
+    }
+    public void ConfirmTurnEnd()
     {
         turnActive = false;
         TurnManager.Instance.timePaused = false;
@@ -291,5 +336,13 @@ public class SkillHolder : MonoBehaviour
         }
         // sets size of skill panel based on how many skills you have
         skillPanel.sizeDelta = new(skillPanel.sizeDelta.x, Mathf.Max(skillPanel.sizeDelta.y, startingSkills.Count * layoutGroup.cellSize.y));
+    }
+    public void UnbindInputs(Scene arg0, Scene arg1)
+    {
+        shiftTarget.action.performed -= ShiftTarget;
+        useSkill.action.performed -= StartMinigame;
+        cancelSkill.action.performed -= CancelSkill;
+        input.action.performed -= UseSkill;
+        SceneManager.activeSceneChanged -= UnbindInputs;
     }
 }

@@ -10,7 +10,6 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
     }
     public void SetEnemies(EncounterData data)
     {
@@ -41,6 +40,25 @@ public class EnemyManager : MonoBehaviour
         {
             Debug.Log("You win");
             VictoryDefeatManager.Instance.SelectCondition(true);
+        }
+    }
+    public void BlurUnits(List<Health> activeUnits)
+    {
+        if (!activeUnits.Contains(playerHealth))
+        {
+            playerHealth.Blur(true);
+        }
+        foreach (Health health in enemies)
+        {
+            if (!activeUnits.Contains(health)) health.Blur(true);
+        }
+    }
+    public void Unblur()
+    {
+        playerHealth.Blur(false);
+        foreach (Health health in enemies)
+        {
+            health.Blur(false);
         }
     }
 }

@@ -13,7 +13,7 @@ public class EnemyHealth : Health
     // Update is called once per frame
     void Update()
     {
-        base.Update();
+        AdjustBar();
         if (health <= 0)
         {
             EnemyManager.Instance.RemoveEnemy(this);

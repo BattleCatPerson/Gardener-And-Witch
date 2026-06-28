@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : Health
 {
@@ -12,10 +13,11 @@ public class PlayerHealth : Health
     [SerializeField] InputActionReference blockInput;
     [SerializeField] float blockDamagePercent;
     [SerializeField] List<float> blockUpgradePercentages;
+    Material material;
     private void Start()
     {
         canBlock = true;
-        base.Start();
+        Initialize();
         if (savedHealth < 0)
         {
             health = maxHealth;
@@ -26,10 +28,14 @@ public class PlayerHealth : Health
         }
         blockInput.action.performed += Block;
         blockDamagePercent = blockUpgradePercentages[StatManager.upgrades[UpgradeType.Block]];
+        material = sprite.material;
+        SceneManager.activeSceneChanged += UnbindBlock;
     }
     private void Update()
     {
-        base.Update();
+        AdjustBar();
+        material.SetFloat("_BlurAmount", 0.1f);
+        sprite.material = material;
         if (!VictoryDefeatManager.Instance.conditionChosen && health <= 0)
         {
             VictoryDefeatManager.Instance.SelectCondition(false);
@@ -40,7 +46,8 @@ public class PlayerHealth : Health
     {
         if (canBlock && EnemySkillManager.enemyAttacking)
         {
-            flashAnimator.SetTrigger("Block");
+            Debug.Log("block");
+            animator.SetTrigger("Block");
         }
         //if (canBlock && EnemySkillManager.enemyAttacking) StartCoroutine(BlockTimer());
     }
@@ -58,5 +65,9 @@ public class PlayerHealth : Health
     {
         yield return new WaitForSeconds(blockCooldown);
         canBlock = true;
+    }
+    public void UnbindBlock(Scene arg0, Scene arg1)
+    {
+        blockInput.action.performed -= Block;
     }
 }

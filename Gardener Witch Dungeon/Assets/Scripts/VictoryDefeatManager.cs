@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class VictoryDefeatManager : MonoBehaviour
 {
     public static VictoryDefeatManager Instance;
+    public event Action gameEndEvent;
     public bool conditionChosen;
     [SerializeField] bool won;
     [SerializeField] Animator nextButton;
@@ -27,6 +29,7 @@ public class VictoryDefeatManager : MonoBehaviour
         {
             StartCoroutine(GameOver());
         }
+        gameEndEvent?.Invoke();
     }
     public IEnumerator ShowNextButton()
     {

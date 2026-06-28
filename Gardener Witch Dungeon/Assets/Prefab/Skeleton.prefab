@@ -379,7 +379,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1b0b85808479c99468448d873aefc767, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -431,9 +431,11 @@ MonoBehaviour:
   barAdjusting: 0
   healthbarAdjustTime: 0.1
   targetPosition: {fileID: 6543093039373834212}
-  flashAnimator: {fileID: 5786353225024194513}
+  animator: {fileID: 5786353225024194513}
   flashTrigger: Hurt
   damageMultiplier: 1
+  inCombat: 0
+  sprite: {fileID: 0}
   playerPosition: {fileID: 0}
   boneDrops: 5
 --- !u!114 &3122454545998534924
@@ -448,6 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f313deaf49cdb64a9aa44668b3e1cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  health: {fileID: 790148827127421446}
   skillList:
   - {fileID: 185429399065349707, guid: aa2e875b69cab9e4a8f9ead9aa36570b, type: 3}
   timeBetweenSkills: 2
@@ -456,6 +459,8 @@ MonoBehaviour:
   animator: {fileID: 5786353225024194513}
   selectedSkill: {fileID: 0}
   attacking: 0
+  moveToPositionTime: 0.25
+  initialPos: {x: 0, y: 0, z: 0}
 --- !u!95 &5786353225024194513
 Animator:
   serializedVersion: 7

@@ -23,6 +23,7 @@ public abstract class PlantSkill : MonoBehaviour
     public float goodValue;
     public float okValue;
     public float badValue;
+    public float distanceFromTarget;
     public void AttemptUse(/*InputAction.CallbackContext context*/)
     {
         if (SkillHolder.Instance.CanUse(this, energyCost))
