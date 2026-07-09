@@ -15,11 +15,11 @@ public class EnemyManager : MonoBehaviour
     {
         encounterData = data;
         List<EnemyHealth> enemyPrefabs = encounterData.enemies;
-        List<float> enemyPositions = encounterData.positions;
+        List<Vector2> enemyPositions = encounterData.positions;
         for (int i = 0; i < enemyPrefabs.Count; i++)
         {
             EnemyHealth e = Instantiate(enemyPrefabs[i], transform);
-            e.transform.localPosition = Vector3.right * enemyPositions[i];
+            e.transform.localPosition = enemyPositions[i];
             enemies.Add(e);
         }
     }

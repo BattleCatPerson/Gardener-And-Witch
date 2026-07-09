@@ -53,8 +53,8 @@ MonoBehaviour:
   goodValue: 0.6
   okValue: 0.4
   badValue: 0.1
-  distanceFromTarget: 5
-  damage: 1
+  distanceFromTarget: 2
+  damage: 10
   goodDamageMult: 0.75
   okDamageMult: 0.5
   badDamageMult: 0.25

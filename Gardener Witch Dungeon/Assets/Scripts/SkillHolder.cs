@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,7 @@ public class SkillHolder : MonoBehaviour
     [SerializeField] InputActionReference useSkill;
     [SerializeField] InputActionReference cancelSkill;
     [SerializeField] Animator skillPanelAnimator;
+    [SerializeField] Animator playerBarAnimator;
     [Header("Skill Use")]
     [SerializeField] Animator plantSkillAnimator;
     [SerializeField, Range(0f, 1f)] float success; // change this in the animation 
@@ -106,8 +108,9 @@ public class SkillHolder : MonoBehaviour
         }
         energyBar.fillAmount = energy / maxEnergy;
         initialPos = transform.position;
-
         SceneManager.activeSceneChanged += UnbindInputs;
+
+        playerBarAnimator.SetTrigger("In");
     }
 
     void Update()
@@ -237,6 +240,7 @@ public class SkillHolder : MonoBehaviour
         activeUnits.Add(targetedEnemy);
         activeUnits.Add(playerHealth);
         EnemyManager.Instance.BlurUnits(activeUnits);
+        playerBarAnimator.SetTrigger("Out");
         StartCoroutine(MoveToPosition());
     }
     public void StartPlantAnimation()
@@ -294,6 +298,7 @@ public class SkillHolder : MonoBehaviour
     public void EndTurn()
     {
         EnemyManager.Instance.Unblur();
+        skillEvent = null;
         StartCoroutine(ReturnToInitialPosition());
     }
     public void ConfirmTurnEnd()
@@ -302,6 +307,7 @@ public class SkillHolder : MonoBehaviour
         TurnManager.Instance.timePaused = false;
         selectedSkillInTurn = false;
         turnTimer = 0;
+        playerBarAnimator.SetTrigger("In");
     }
     public void UseSkill(InputAction.CallbackContext context)
     {
@@ -318,6 +324,7 @@ public class SkillHolder : MonoBehaviour
     public void InvokePlantSkillEvent() //use in animation
     {
         skillEvent?.Invoke(skillResult);
+        Debug.Log("USE SKILL");
     }
     public void EquipSkills()
     {   foreach (PlantSkill skill in startingSkills)

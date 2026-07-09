@@ -4,5 +4,5 @@ using UnityEngine;
 public class EncounterData : ScriptableObject
 {
     public List<EnemyHealth> enemies;
-    public List<float> positions;
+    public List<Vector2> positions;
 }

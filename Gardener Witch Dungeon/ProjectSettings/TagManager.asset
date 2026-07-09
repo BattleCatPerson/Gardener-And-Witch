@@ -38,11 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 894773361
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: CameraSortingLayer
+  - name: Defender
     uniqueID: 3293633661
+    locked: 0
+  - name: Attacker
+    uniqueID: 272434819
     locked: 0
   m_RenderingLayers:
   - Default

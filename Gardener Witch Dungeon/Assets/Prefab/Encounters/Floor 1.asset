@@ -15,4 +15,4 @@ MonoBehaviour:
   enemies:
   - {fileID: 790148827127421446, guid: af5e9e836d20ce44bbb4c7e75bbec939, type: 3}
   positions:
-  - 0
+  - {x: 0, y: 0, z: -1.7765462e-31}

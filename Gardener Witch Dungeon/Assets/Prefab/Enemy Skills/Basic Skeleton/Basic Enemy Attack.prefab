@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   skillCooldown: 2
   skillName: Basic Attack
-  distanceFromPlayer: 2
+  distanceFromPlayer: 0.5
   damage: 1
   timer: 0

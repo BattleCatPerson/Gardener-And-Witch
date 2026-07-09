@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 790148827127421446, guid: af5e9e836d20ce44bbb4c7e75bbec939, type: 3}
   - {fileID: 790148827127421446, guid: af5e9e836d20ce44bbb4c7e75bbec939, type: 3}
   positions:
-  - -2
-  - 2
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
