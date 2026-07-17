@@ -314,7 +314,15 @@ public class SkillHolder : MonoBehaviour
         if (canInput)
         {
             skillResult = selectedSkill.GetSkillResult(success);
-            plantSkillAnimator.SetTrigger(skillResult.ToString());
+            //plantSkillAnimator.SetTrigger(skillResult.ToString());
+            if (skillResult == SkillResult.Fail)
+            {
+                plantSkillAnimator.SetTrigger("Fail");
+            }
+            else
+            {
+                plantSkillAnimator.SetTrigger("Use");
+            }
         }
         //if (skillInUse)
         //{
