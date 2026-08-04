@@ -119,6 +119,20 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &6490289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Use Skill Alternate
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_ActionId: b6b4d8d1-cad4-4b5f-9923-362e705a5238
 --- !u!114 &48289082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2317,7 +2331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00087636017}
+  m_AnchoredPosition: {x: 0, y: 0.000058130605}
   m_SizeDelta: {x: 400, y: 110}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1030108534
@@ -4269,6 +4283,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792969952}
   m_CullTransparentMesh: 1
+--- !u!114 &1796714299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Use Skill
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_ActionId: 3f6f6798-459d-4932-8e1c-5434c635ab76
 --- !u!1 &1834003383
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,7 +4497,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2033817940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9980162
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5278,6 +5306,14 @@ PrefabInstance:
       value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8532059084998958919, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: inputNegative
+      value: 
+      objectReference: {fileID: 6490289}
+    - target: {fileID: 8532059084998958919, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: inputPositive
+      value: 
+      objectReference: {fileID: 1796714299}
+    - target: {fileID: 8532059084998958919, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
       propertyPath: cinemachineCam
       value: 
       objectReference: {fileID: 1288114692}
@@ -5309,6 +5345,14 @@ PrefabInstance:
       propertyPath: targetMarkerParent
       value: 
       objectReference: {fileID: 191059863}
+    - target: {fileID: 8532059084998958919, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: startingSkills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532059084998958919, guid: 642c98dd5b4cba54a9b5fe40e37ce04a, type: 3}
+      propertyPath: 'startingSkills.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3322198738003481136, guid: fa3caf81803dbc74986a12e264ded081, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -56,14 +56,16 @@ public class SkillHolder : MonoBehaviour
     [SerializeField] Animator skillPanelAnimator;
     [SerializeField] Animator playerBarAnimator;
     [Header("Skill Use")]
-    [SerializeField] Animator plantSkillAnimator;
-    [SerializeField, Range(0f, 1f)] float success; // change this in the animation 
+    public Animator plantSkillAnimator;
+    [SerializeField, Range(0f, 1f)] public float success; // change this in the animation 
     [SerializeField] SkillResult skillResult;
-    [SerializeField] InputActionReference input;
+    [SerializeField] InputActionReference inputPositive;
+    [SerializeField] InputActionReference inputNegative;
     [SerializeField] bool skillInUse;
-    [SerializeField] bool canInput; // set this in animation
+    public bool canInput; // set this in animation
     [SerializeField] float moveToPositionTime;
     [SerializeField] Vector3 initialPos;
+    public PlantSkill activeSkill;
     [Header("Turn Tracker")]
     [SerializeField] Image turnBar;
     [SerializeField] float turnTimer;
@@ -84,7 +86,8 @@ public class SkillHolder : MonoBehaviour
         shiftTarget.action.performed += ShiftTarget;
         useSkill.action.performed += StartMinigame;
         cancelSkill.action.performed += CancelSkill;
-        input.action.performed += UseSkill;
+        inputPositive.action.performed += PositiveInput;
+        inputNegative.action.performed += NegativeInput;
         adjustCoroutine = null;
 
         // sets targeting indicators
@@ -298,7 +301,6 @@ public class SkillHolder : MonoBehaviour
     public void EndTurn()
     {
         EnemyManager.Instance.Unblur();
-        skillEvent = null;
         StartCoroutine(ReturnToInitialPosition());
     }
     public void ConfirmTurnEnd()
@@ -309,46 +311,63 @@ public class SkillHolder : MonoBehaviour
         turnTimer = 0;
         playerBarAnimator.SetTrigger("In");
     }
-    public void UseSkill(InputAction.CallbackContext context)
+    //public void UseSkill(InputAction.CallbackContext context)
+    //{
+    //    if (canInput)
+    //    {
+    //        skillResult = selectedSkill.GetSkillResult(success);
+    //        //plantSkillAnimator.SetTrigger(skillResult.ToString());
+    //        if (skillResult == SkillResult.Fail)
+    //        {
+    //            plantSkillAnimator.SetTrigger("Fail");
+    //        }
+    //        else
+    //        {
+    //            plantSkillAnimator.SetTrigger("Use");
+    //        }
+    //    }
+    //    //if (skillInUse)
+    //    //{
+    //    //    skillEvent?.Invoke(success);
+    //    //}
+    //}
+    public void PositiveInput(InputAction.CallbackContext context)
     {
-        if (canInput)
+        if (activeSkill != null)
         {
-            skillResult = selectedSkill.GetSkillResult(success);
-            //plantSkillAnimator.SetTrigger(skillResult.ToString());
-            if (skillResult == SkillResult.Fail)
-            {
-                plantSkillAnimator.SetTrigger("Fail");
-            }
-            else
-            {
-                plantSkillAnimator.SetTrigger("Use");
-            }
+            activeSkill.PositiveListener();
         }
-        //if (skillInUse)
-        //{
-        //    skillEvent?.Invoke(success);
-        //}
+    }
+    public void NegativeInput(InputAction.CallbackContext context)
+    {
+        if (activeSkill != null)
+        {
+            activeSkill.NegativeListener();
+        }
     }
     public void InvokePlantSkillEvent() //use in animation
     {
-        skillEvent?.Invoke(skillResult);
+        //skillEvent?.Invoke(skillResult);
+        activeSkill.AnimationListener();
         Debug.Log("USE SKILL");
     }
     public void EquipSkills()
     {   foreach (PlantSkill skill in startingSkills)
         {
             SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
-            s.SetValues(skill);
+            PlantSkill skillInstance = Instantiate(skill, s.transform);
+            s.SetValues(skillInstance);
         }
-        foreach (var skillList in skillLists)
-        {
-            int upgradeCount = StatManager.upgrades[skillList.upgradeType];
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
-                s.SetValues(skillList.skills[i]);
-            }
-        }
+        //foreach (var skillList in skillLists)
+        //{
+        //    int upgradeCount = StatManager.upgrades[skillList.upgradeType];
+        //    for (int i = 0; i < upgradeCount; i++)
+        //    {
+        //        SkillSelectionButton s = Instantiate(skillButtonPrefab, skillPanel);
+        //        PlantSkill skillInstance = Instantiate(skillList.skills[i], s.transform);
+        //        s.SetValues(skillInstance);
+        //    }
+        //}
         // sets size of skill panel based on how many skills you have
         skillPanel.sizeDelta = new(skillPanel.sizeDelta.x, Mathf.Max(skillPanel.sizeDelta.y, startingSkills.Count * layoutGroup.cellSize.y));
     }
@@ -357,7 +376,8 @@ public class SkillHolder : MonoBehaviour
         shiftTarget.action.performed -= ShiftTarget;
         useSkill.action.performed -= StartMinigame;
         cancelSkill.action.performed -= CancelSkill;
-        input.action.performed -= UseSkill;
+        inputPositive.action.performed -= PositiveInput;
+        inputNegative.action.performed -= NegativeInput;
         SceneManager.activeSceneChanged -= UnbindInputs;
     }
 }

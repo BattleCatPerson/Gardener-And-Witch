@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5565708150883333115}
-  - component: {fileID: 3904680436657233429}
+  - component: {fileID: 3322198738003481136}
   m_Layer: 0
-  m_Name: Basic Skill 2
+  m_Name: Seed Barrage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3904680436657233429
+--- !u!114 &3322198738003481136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 131716027088628555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f5c4765530e3fd418cf8ff43ce733d8, type: 3}
+  m_Script: {fileID: 11500000, guid: f063ca73da94f0145a8c4e14c5d6f19c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  skillName: Not Tackle
-  energyCost: 20
-  cooldown: 2
-  sprite: {fileID: 311208693928687872, guid: 6f0e0fcea2b57284e98e3cae6dc10666, type: 3}
-  sceneName: Basic Attack
+  m_EditorClassIdentifier: Assembly-CSharp::SeedBarrage
+  skillName: Seed Barrage
+  energyCost: 0
+  targetType: 0
+  triggerName: Seed Barrage
+  greatValue: 0
+  goodValue: 0
+  okValue: 0
+  badValue: 0
+  distanceFromTarget: 2
+  skillHolder: {fileID: 0}
+  result: 0
   damage: 1
+  goodDamageMult: 0
+  okDamageMult: 0
+  badDamageMult: 0
+  phase: 0
+  direction: 0
+  maxShotCount: 5
+  shotsFired: 0

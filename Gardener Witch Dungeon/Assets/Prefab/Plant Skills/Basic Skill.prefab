@@ -54,7 +54,10 @@ MonoBehaviour:
   okValue: 0.4
   badValue: 0.1
   distanceFromTarget: 2
+  skillHolder: {fileID: 0}
+  result: 0
   damage: 10
   goodDamageMult: 0.75
   okDamageMult: 0.5
   badDamageMult: 0.25
+  input: {fileID: 0}

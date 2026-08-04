@@ -133,6 +133,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Use Skill Alternate",
+                    "type": "Button",
+                    "id": "b6b4d8d1-cad4-4b5f-9923-362e705a5238",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cancel Skill",
                     "type": "Button",
                     "id": "0d9027ee-2dde-4c79-b3ad-2677988c6c65",
@@ -640,6 +649,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "458c100c-c46a-490c-892d-6fd27ab2b6b5",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Skill Alternate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

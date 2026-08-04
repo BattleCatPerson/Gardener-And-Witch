@@ -27,7 +27,7 @@ public class PlayerHealth : Health
             health = savedHealth;
         }
         blockInput.action.performed += Block;
-        blockDamagePercent = blockUpgradePercentages[StatManager.upgrades[UpgradeType.Block]];
+        //blockDamagePercent = blockUpgradePercentages[StatManager.upgrades[UpgradeType.Block]];
         material = sprite.material;
         SceneManager.activeSceneChanged += UnbindBlock;
     }
