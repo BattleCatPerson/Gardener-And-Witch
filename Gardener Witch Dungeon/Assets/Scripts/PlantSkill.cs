@@ -52,4 +52,8 @@ public abstract class PlantSkill : MonoBehaviour
         else if (success >= badValue) return SkillResult.Bad;
         return SkillResult.Fail;
     }
+    public void Initialize()
+    {
+        skillHolder = SkillHolder.Instance;
+    }
 }

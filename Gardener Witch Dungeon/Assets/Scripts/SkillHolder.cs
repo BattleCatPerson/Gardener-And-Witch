@@ -223,6 +223,7 @@ public class SkillHolder : MonoBehaviour
     public void StartTargeting(PlantSkill skill)
     {
         selectedSkill = skill;
+        targetType = selectedSkill.targetType;
         targeting = true;
         skillPanelAnimator.SetTrigger("Out");
     }

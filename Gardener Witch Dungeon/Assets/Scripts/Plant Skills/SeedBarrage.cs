@@ -22,12 +22,12 @@ public class SeedBarrage : PlantSkill
     private void Start()
     {
         phase = Phase.Initial;
-        skillHolder = SkillHolder.Instance;
+        Initialize();
     }
     public void Use()
     {
         Debug.Log("seed barrage hit!");
-        SkillHolder.Instance.targetedEnemy.TakeDamage(damage);
+        skillHolder.targetedEnemy.TakeDamage(damage);
         shotsFired++;
         phase = Phase.ShootAnim;
     }

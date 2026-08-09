@@ -9,7 +9,7 @@ public class PlantAttack : PlantSkill
     [SerializeField] float badDamageMult;
     private void Start()
     {
-        skillHolder = SkillHolder.Instance;
+        Initialize();
     }
     public void Use()
     {
