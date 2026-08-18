@@ -5,13 +5,14 @@ public class VineWhip : PlantSkill
 {
     public enum State
     {
-        Start, Down, Up, End
+        Start, MovingDown, Down, MovingUp, Up, End
     }
 
     [SerializeField] float damage;
     [SerializeField] float timeLimit;
     [SerializeField] float timer;
     [SerializeField] State state;
+    [SerializeField] bool ended;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,10 +25,12 @@ public class VineWhip : PlantSkill
         {
             timer -= Time.deltaTime;
         }
-        else if (state != State.Start)
+        if ((timer <= 0 || skillHolder.enemies.Count == 0) && state != State.Start)
         {
             state = State.Start;
             skillHolder.plantSkillAnimator.SetTrigger("End");
+            skillHolder.activeSkill = null;
+            ended = true;
             Debug.Log("end");
         }
     }
@@ -35,11 +38,13 @@ public class VineWhip : PlantSkill
     {
         yield return new WaitForSeconds(timeLimit);
         skillHolder.plantSkillAnimator.SetTrigger("End");
-        state = State.End;
     }
     public void Damage()
     {
-        SkillHolder.Instance.targetedEnemy.TakeDamage(damage);
+        foreach (EnemyHealth e in skillHolder.enemies)
+        {
+            e.TakeDamage(damage);
+        }
     }
     public override void AnimationListener()
     {
@@ -52,17 +57,18 @@ public class VineWhip : PlantSkill
                 timer = timeLimit;
             }
             state = State.Up;
+            ended = false;
         }
-        else if (state == State.Up)
-        {
-            Damage();
-            state = State.Down;
-        }
-        else if (state == State.Down)
-        {
-            Damage();
-            state = State.Up;
-        }
+        //else if (state == State.Up)
+        //{
+        //    Damage();
+        //    state = State.Down;
+        //}
+        //else if (state == State.Down)
+        //{
+        //    Damage();
+        //    state = State.Up;
+        //}
         //else if (state == State.End)
         //{
         //    state = State.Start;
@@ -71,17 +77,21 @@ public class VineWhip : PlantSkill
 
     public override void NegativeListener()
     {
-        if (state == State.Up && skillHolder.canInput)
+        if (state == State.Up && skillHolder.canInput && !ended && skillHolder.activeSkill == this)
         {
             skillHolder.plantSkillAnimator.SetTrigger("Right");
+            state = State.Down;
+            Damage();
         }
     }
 
     public override void PositiveListener()
     {
-        if (state == State.Down && skillHolder.canInput)
+        if (state == State.Down && skillHolder.canInput && !ended && skillHolder.activeSkill == this)
         {
             skillHolder.plantSkillAnimator.SetTrigger("Left");
+            state = State.Up;
+            Damage();
         }
     }
 }

@@ -206,7 +206,7 @@ public class SkillHolder : MonoBehaviour
     public void ShiftTarget(InputAction.CallbackContext context)
     {
         Debug.Log("shift target");
-        if (enemies.Count <= 1 || !targeting) return;
+        if (enemies.Count <= 1 || !targeting || targetType != TargetType.singleEnemy) return;
         float value = context.ReadValue<float>();
         int adjustment = value < 1 ? -1 : 1;
         targetIndex += adjustment;
@@ -240,10 +240,13 @@ public class SkillHolder : MonoBehaviour
         if (!targeting) return;
         targeting = false;
         MoveTargetIndicators();
-        List<Health> activeUnits = new();
-        activeUnits.Add(targetedEnemy);
-        activeUnits.Add(playerHealth);
-        EnemyManager.Instance.BlurUnits(activeUnits);
+        if (targetType == TargetType.singleEnemy)
+        {
+            List<Health> activeUnits = new();
+            activeUnits.Add(targetedEnemy);
+            activeUnits.Add(playerHealth);
+            EnemyManager.Instance.BlurUnits(activeUnits);
+        }
         playerBarAnimator.SetTrigger("Out");
         StartCoroutine(MoveToPosition());
     }
@@ -257,7 +260,20 @@ public class SkillHolder : MonoBehaviour
     public IEnumerator MoveToPosition()
     {
         float timer = 0;
-        Vector3 finalPos = targetedEnemy.transform.position - Vector3.right * selectedSkill.distanceFromTarget;
+        Vector3 finalPos = transform.position;
+        if (targetType == TargetType.singleEnemy)
+        {
+            finalPos = targetedEnemy.transform.position - Vector3.right * selectedSkill.distanceFromTarget;
+        }
+        else if (targetType == TargetType.allEnemies)
+        {
+            Vector3 sum = Vector3.zero;
+            foreach (EnemyHealth e in enemies)
+            {
+                sum += e.transform.position;
+            }
+            finalPos = sum / enemies.Count - Vector3.right * selectedSkill.distanceFromTarget;
+        }
         while (timer < moveToPositionTime)
         {
             timer += Time.deltaTime;

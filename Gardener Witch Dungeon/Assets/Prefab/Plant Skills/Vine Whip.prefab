@@ -55,6 +55,8 @@ MonoBehaviour:
   distanceFromTarget: 3
   skillHolder: {fileID: 0}
   result: 0
-  damage: 1
-  timeLimit: 2
+  damage: 10
+  timeLimit: 500
+  timer: 0
   state: 0
+  ended: 0

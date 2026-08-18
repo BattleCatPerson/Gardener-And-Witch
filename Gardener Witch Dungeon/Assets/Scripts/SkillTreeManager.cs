@@ -3,17 +3,27 @@ using System;
 using UnityEngine;
 using System.Resources;
 using TMPro;
-
 public class SkillTreeManager : MonoBehaviour
 {
+
+
     [Serializable]
     public class SkillTreeUnlocked
     {
         public SkillTreeElement skill;
         public bool isUnlocked;
     }
+    [Serializable]
+    public class SkillTypeSkillList
+    {
+        public string skillType;
+        public List<SkillTreeElement> skills;
+    }
+
     public static SkillTreeManager Instance;
     [SerializeField] List<SkillTreeUnlocked> unlockStatuses;
+    [SerializeField] List<SkillTypeSkillList> skillTypeSkillLists;
+    [SerializeField] List<SkillTreeButton> skillButtons;
     [SerializeField] TextMeshProUGUI boneText;
     [SerializeField] SkillTreePanel panel;
     [SerializeField] Animator skillTreeAnimator;
@@ -62,6 +72,26 @@ public class SkillTreeManager : MonoBehaviour
     {
         panel.SetStuff(skill, skill.skillName, skill.skillDescription, skill.boneCost, SkillUnlocked(skill));
         panel.OpenPanel();
+    }
+    public void OpenSkillTree(string skillType)
+    {
+        List<SkillTreeElement> skills = new();
+        foreach (SkillTypeSkillList s in skillTypeSkillLists)
+        {
+            if (s.skillType.Equals(skillType))
+            {
+                skills = s.skills;
+                break;
+            }
+        }
+        if (skills.Count > 0)
+        {
+            for (int i = 0; i < skills.Count; i++)
+            {
+                skillButtons[i].SetButton(skills[i]);
+            }
+        }
+        skillTreeAnimator.SetTrigger("Open");
     }
     public void CloseTree()
     {

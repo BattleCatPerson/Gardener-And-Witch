@@ -7,6 +7,7 @@ public class SkillTreeElement : ScriptableObject
     public string skillDescription;
     public int boneCost;
     public List<SkillTreeElement> requirements;
+    public Sprite sprite;
 
     public PlantSkill unlockedSkill;
     public float healthBonus;
