@@ -128,7 +128,10 @@ public class SkillHolder : MonoBehaviour
             targetIndex = Mathf.Clamp(targetIndex, 0, enemies.Count - 1);
             if (enemies.Count > 0)
             {
-                targetedEnemy = enemies[targetIndex];
+                if (targeting)
+                {
+                    targetedEnemy = enemies[targetIndex];
+                }
             }
             else
             {
